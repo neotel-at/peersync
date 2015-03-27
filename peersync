@@ -145,9 +145,9 @@ COMMANDS
         syncing are shown
 
     diff [FILE1 FILE2 ...]
-        Compore the file contents of changed file against peer. A local copy 
-        will be stored in  for both local and remote files, which will be
-        processed by a local diff command (default: diff -urw)
+        Compare the file contents of changed file against peer. Both local and
+        remote files will be synced to a temporary directory and processed by a
+        local diff command (default: diff -urw)
 
     config
         Show the current peersync configuration and file filter for syncing
