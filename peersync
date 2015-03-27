@@ -1,7 +1,7 @@
 #!/bin/bash
 # PeerSync - a file syncronization tool for clustered hosts 
 # Author: roland.lammel@neotel.at
-# (C)2014, NeoTel Telefonservice GmbH & Co KG
+# (C)2015, NeoTel Telefonservice GmbH & Co KG
 
 VERSION=0.9.0
 PEERSYNCCONFIGS="$HOME/.peersync /etc/peersync.conf"
@@ -118,11 +118,19 @@ if [ "$1" = "help" ]; then
     version
     cat <<__EOF_HELP
 
-USAGE 
+PeerSync
+========
+
+A peer file syncronisation tool based on rsync
+
+
+USAGE
+-----
 
     peersync [OPTIONS] [ show | sync | config | help | version ]
 
 COMMANDS
+--------
 
     show [verbose]
         Show files, link and directories with differences (in rsync itemize 
@@ -133,13 +141,13 @@ COMMANDS
     sync [verbose]
         Sync of files to peer, files on the peer will be over-written 
         (no backup is generated)
-        If "verbose" is specified also candidate files not considered for syncing
-        are shown
+        If "verbose" is specified also candidate files not considered for 
+        syncing are shown
 
     diff [FILE1 FILE2 ...]
-        Compore the file contents of changed file against peer. A local copy will 
-        be stored in $DIFFTMPDIR for both local and remote files, which will be
-        processed by a local diff command (default: $DIFFBIN $DIFFOPTS)
+        Compore the file contents of changed file against peer. A local copy 
+        will be stored in  for both local and remote files, which will be
+        processed by a local diff command (default: diff -urw)
 
     config
         Show the current peersync configuration and file filter for syncing
@@ -151,6 +159,7 @@ When no command is specified "show" is assumed
 
 
 OPTIONS
+-------
 
     -c CONFIGFILE
         User configuraiton file from CONFIGFILE
@@ -163,22 +172,24 @@ OPTIONS
 
 
 CONFIGURATION FILE
+------------------
 
-The configuration for peersync can be placed in \$HOME/.peersync or /etc/peersync.conf.
-The first file found will be loaded. 
+The configuration for peersync can be placed in $HOME/.peersync or 
+/etc/peersync.conf. The first file found will be loaded. 
 
 Example configuration in /etc/peersync.conf (commented options show defaults):
 
     PEER=myuser@mypeer
-    SYNCROOT=$SYNCROOT
-    # SYNCFILES=$SYNCFILES
-    # RSYNCOPTS=$RSYNCOPTS
-    # DIFFBIN=$DIFFBIN
-    # DIFFOPTS=$DIFFOPTS
-    # DIFFTMPDIR=$DIFFTMPDIR
+    SYNCROOT=/etc/
+    # SYNCFILES=/etc/peersync.files
+    # RSYNCOPTS=-avhizO --numeric-ids --checksum --delete-after
+    # DIFFBIN=diff
+    # DIFFOPTS=-urw
+    # DIFFTMPDIR=
 
 
-FILE FILTERING RULES CONFIGURATION
+FILE FILTERING RULES
+--------------------
 
 Example file filtering in /etc/peersync.files:
 
@@ -190,6 +201,11 @@ This example will sync only the nginx directory excluding the nginx/ssl sub-
 directory, all other files and directory are not considered.
 
 See the INCLUDE/EXCLUDE PATTERN RULES section in the rsync manpage for details.
+
+COPYRIGHT
+---------
+
+(C)2015, NeoTel Telefonservice GmbH & Co KG
 
 __EOF_HELP
     exit 1
