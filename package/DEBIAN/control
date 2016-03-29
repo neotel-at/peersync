@@ -1,0 +1,7 @@
+Package: peersync
+Architecture: all
+Maintainer: Roland Lammel <roland.lammel@neotel.at>
+Depends: debconf (>= 0.5.00), rsync
+Priority: optional
+Version: %VERSION%
+Description: A peer file syncronisation tool based on rsync
