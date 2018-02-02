@@ -7,23 +7,24 @@ USAGE
 -----
 
     peersync [ config | help | version ]
-    peersync [OPTIONS] [ show | sync | diff ] [FILE1 FILE2 ...]
+    peersync [OPTIONS] [ show | sync | diff ] [FILTER1 FILTER2 ...]
 
 COMMANDS
 --------
 
-    show [FILE1 FILE2 ...]
+    show [FILTER1 FILTER2 ...]
         Show files, link and directories with differences (in rsync itemize 
         format), no files will be modified on the peer.
-        If files filtering rules are specified, these will take precedence and
-        only files matching this pattern will be considered.
+        If file filtering rules are specified, these will take precedence and
+        only files matching this pattern will be considered. 
+        See FILE FILTERING RULES below.
 
-    sync [FILE1 FILE2 ...]
+    sync [FILTER1 FILTER2 ...]
         Sync of files to peer, files on the peer will be over-written 
         (no backup is generated).
         File filtering rules may be specified (see show)
 
-    diff [PATTERN1 PATTERN2 ...]
+    diff [FILTER1 FILTER2 ...]
         Compore the file contents of changed file against peer. A local copy
         will be compared to a copy of the remote files using the diff command
         (default: diff -urw).
