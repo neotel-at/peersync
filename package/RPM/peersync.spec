@@ -1,7 +1,6 @@
 Summary: A peer file synchronisation tool based on rsync
 Name: peersync
-Version: 0.9.0
-# Version: 0.9.0
+Version: %VERSION%
 Release: 1
 Group: System/Base
 License: GPL
