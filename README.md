@@ -3,40 +3,42 @@ PeerSync
 
 A peer file syncronisation tool based on rsync
 
-
 USAGE
 -----
 
-    peersync [OPTIONS] [ show | sync | config | help | version ]
+    peersync [ config | help | version ]
+    peersync [OPTIONS] [ show | sync | diff ] [FILE1 FILE2 ...]
 
 COMMANDS
 --------
 
-    show [verbose]
+    show [FILE1 FILE2 ...]
         Show files, link and directories with differences (in rsync itemize 
-        format), no files will be modified on the peer
-        If verbose is specified also candidate files not considered for syncing
-        are shown
+        format), no files will be modified on the peer.
+        If files filtering rules are specified, these will take precedence and
+        only files matching this pattern will be considered.
 
-    sync [verbose]
+    sync [FILE1 FILE2 ...]
         Sync of files to peer, files on the peer will be over-written 
-        (no backup is generated)
-        If "verbose" is specified also candidate files not considered for syncing
-        are shown
+        (no backup is generated).
+        File filtering rules may be specified (see show)
 
-    diff [FILE1 FILE2 ...]
-        Compore the file contents of changed file against peer. A local copy will 
-        be stored in  for both local and remote files, which will be
-        processed by a local diff command (default: diff -urw)
+    diff [PATTERN1 PATTERN2 ...]
+        Compore the file contents of changed file against peer. A local copy
+        will be compared to a copy of the remote files using the diff command
+        (default: diff -urw).
+        File filtering rules may be specified (see show)
 
     config
         Show the current peersync configuration and file filter for syncing
+
+    version
+        Show the version of peersync
 
     help
         Show help on commands and configuration
 
 When no command is specified "show" is assumed
-
 
 OPTIONS
 -------
@@ -49,7 +51,6 @@ OPTIONS
     -s SYNCROOT
         Use SYNCROOT as root for syncronisation, overrides configuration
     -d Enable DEBUG logging, for debug purposes only
-
 
 CONFIGURATION FILE
 ------------------
@@ -67,22 +68,24 @@ Example configuration in /etc/peersync.conf (commented options show defaults):
     # DIFFOPTS=-urw
     # DIFFTMPDIR=
 
-
 FILE FILTERING RULES
 --------------------
 
-Example file filtering in /etc/peersync.files:
+Example file filtering rules in /etc/peersync.files:
 
     - /nginx/ssl/
     + /nginx/***
     - *
 
-This example will sync only the nginx directory excluding the nginx/ssl sub-
-directory, all other files and directory are not considered.
+For the `SYNCROOT=/etc/` this will sync all nginx configurations of /etc/nginx (and below), exlcuding the /etc/nginx/ssl directory.
+All other files in /etc will also be excluded, due to the '`- *`' rule.
+
+This example will sync only the `nginx` directory excluding the `nginx/ssl` sub-
+directory, all other files and directory are not considered. The example assumes `/etc` as the synchronization root directory (`SYNCROOT=/etc/`).
 
 See the INCLUDE/EXCLUDE PATTERN RULES section in the rsync manpage for details.
 
 COPYRIGHT
 ---------
 
-(C)2015, NeoTel Telefonservice GmbH & Co KG
+(C)2015-2018, NeoTel Telefonservice GmbH & Co KG
