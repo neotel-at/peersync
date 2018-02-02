@@ -1,4 +1,4 @@
-Summary: A simple rsync based peer cluster sync helper
+Summary: A peer file synchronisation tool based on rsync
 Name: peersync
 Version: 0.9.0
 # Version: 0.9.0
@@ -11,7 +11,7 @@ BuildArch: noarch
 BuildRoot: /var/tmp/%{name}-buildroot
 
 %description
-Peersync is a rsync based peer synchronization tool
+Peersync is a rsync based peer file synchronization tool
 
 # %prep
 # %setup -q
