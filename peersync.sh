@@ -3,7 +3,7 @@
 # Author: Roland Lammel <roland.lammel@neotel.at>
 # (C)2015-2018, NeoTel Telefonservice GmbH & Co KG
 
-VERSION=0.9.1
+VERSION=0.9.2
 PEERSYNCCONFIGS="$HOME/.peersync /etc/peersync.conf"
 DEBUG=${DEBUG-0}
 VERBOSE=${VERBOSE-0}
@@ -198,11 +198,13 @@ Example file filtering rules in /etc/peersync.files:
     + /nginx/***
     - *
 
-For the `SYNCROOT=/etc/` this will sync all nginx configurations of /etc/nginx (and below), exlcuding the /etc/nginx/ssl directory.
-All other files in /etc will also be excluded, due to the '`- *`' rule.
+For SYNCROOT=/etc/ this will sync all nginx configurations of /etc/nginx (and 
+below), exlcuding the /etc/nginx/ssl directory. All other files in /etc will 
+also be excluded, due to the "- *" rule.
 
-This example will sync only the `nginx` directory excluding the `nginx/ssl` sub-
-directory, all other files and directory are not considered. The example assumes `/etc` as the synchronization root directory (`SYNCROOT=/etc/`).
+This example will sync only the "nginx" directory excluding the "nginx/ssl" 
+sub-directory, all other files and directory are not considered. The example 
+assumes "/etc" as the synchronization root directory (SYNCROOT=/etc/).
 
 See the INCLUDE/EXCLUDE PATTERN RULES section in the rsync manpage for details.
 
