@@ -1,7 +1,9 @@
 PeerSync
 ========
 
-A peer file syncronisation tool based on rsync
+A simple rsync-based peer file syncronisation tool to keep a defined list of 
+directories and files in sync on two hosts. Usually used on cluster nodes 
+sharing the same configurations.
 
 USAGE
 -----
