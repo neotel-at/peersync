@@ -27,7 +27,7 @@ COMMANDS
         File filtering rules may be specified (see show)
 
     diff [FILTER1 FILTER2 ...]
-        Compore the file contents of changed file against peer. A local copy
+        Compare the file contents of changed file against peer. A local copy
         will be compared to a copy of the remote files using the diff command
         (default: diff -urw).
         File filtering rules may be specified (see show)
