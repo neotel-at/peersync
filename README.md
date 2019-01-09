@@ -91,4 +91,4 @@ See the INCLUDE/EXCLUDE PATTERN RULES section in the rsync manpage for details.
 COPYRIGHT
 ---------
 
-(C)2015-2018, NeoTel Telefonservice GmbH & Co KG
+(C)2015-2019, NeoTel Telefonservice GmbH & Co KG
