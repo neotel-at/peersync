@@ -1,7 +1,7 @@
 #!/bin/bash
 # PeerSync - a file syncronization tool for clustered hosts 
 # Author: Roland Lammel <roland.lammel@neotel.at>
-# (C)2015-2018, NeoTel Telefonservice GmbH & Co KG
+# (C)2015-2019, NeoTel Telefonservice GmbH & Co KG
 
 VERSION=0.9.2
 PEERSYNCCONFIGS="$HOME/.peersync /etc/peersync.conf"
@@ -211,7 +211,7 @@ See the INCLUDE/EXCLUDE PATTERN RULES section in the rsync manpage for details.
 COPYRIGHT
 ---------
 
-(C)2015-2018, NeoTel Telefonservice GmbH & Co KG
+(C)2015-2019, NeoTel Telefonservice GmbH & Co KG
 
 __EOF_HELP
     exit 1
