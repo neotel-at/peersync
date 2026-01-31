@@ -14,7 +14,7 @@ DRYRUN=1
 PEER=peer
 SYNCROOT=/etc/
 SYNCFILES=/etc/peersync.files
-RSYNCOPTS="-avhizO --numeric-ids --checksum --delete-after"
+RSYNCOPTS="-avhizO --checksum --delete-after"
 SYNCTMPDIR=/tmp
 DIFFBIN=diff
 DIFFOPTS="-urw"
@@ -187,10 +187,15 @@ Example configuration in /etc/peersync.conf (commented options show defaults):
     PEER=myuser@mypeer
     SYNCROOT=/etc/
     # SYNCFILES=/etc/peersync.files
-    # RSYNCOPTS=-avhizO --numeric-ids --checksum --delete-after
+    # RSYNCOPTS="-avhizO --checksum --delete-after"
     # DIFFBIN=diff
     # DIFFOPTS=-urw
     # DIFFTMPDIR=
+
+To ensure consistent numeric user and group IDs the '--numeric-ids' rsync
+option must be used. This requires a consistenc user configuation on the system:
+
+    RSYNCOPTS="-avhizO --numeric-ids --checksum --delete-after"
 
 FILE FILTERING RULES
 --------------------
