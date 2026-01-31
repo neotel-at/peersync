@@ -16,15 +16,14 @@ mkdir -p $RPM_BUILD_ROOT/usr/bin
 mkdir -p $RPM_BUILD_ROOT/etc
 
 install -m 755 peersync.sh $RPM_BUILD_ROOT/usr/bin/peersync
-install -m 755 etc/peersync.conf $RPM_BUILD_ROOT/etc/peersync.conf
-install -m 755 etc/peersync.files $RPM_BUILD_ROOT/etc/peersync.files
+install -m 640 etc/peersync.conf $RPM_BUILD_ROOT/etc/peersync.conf
+install -m 640 etc/peersync.files $RPM_BUILD_ROOT/etc/peersync.files
 
 %files
 %defattr(-,root,root)
 /usr/bin/peersync
-%config(noreplace)
-/etc/peersync.conf
-/etc/peersync.files
+%config(noreplace) /etc/peersync.conf
+%config(noreplace) /etc/peersync.files
 
 %post
 

@@ -31,6 +31,8 @@ build_debian() {
   cp $PEERSYNC_SCRIPT $BUILDDIR/usr/bin/peersync
   cp etc/peersync.conf $BUILDDIR/etc/
   cp etc/peersync.files $BUILDDIR/etc/
+  chmod 640 $BUILDDIR/etc/peersync.*
+  chmod 755 $BUILDDIR/usr/bin/peersync
 
   sed -i "s/%VERSION%/$VERSION/" $BUILDDIR/DEBIAN/control
   fakeroot dpkg-deb -v --build $BUILDDIR $TARGETDIR/peersync_$VERSION.deb
