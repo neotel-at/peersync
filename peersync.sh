@@ -3,7 +3,7 @@
 # Author: Roland Lammel <roland.lammel@neotel.at>
 # (C)2015-2026, NeoTel Telefonservice GmbH & Co KG
 
-VERSION=0.9.2
+VERSION=0.9.3
 COPYRIGHT="(C)2015-2026, NeoTel Telefonservice GmbH & Co KG"
 PEERSYNCCONFIGS="$HOME/.peersync /etc/peersync.conf"
 DEBUG=${DEBUG-0}
