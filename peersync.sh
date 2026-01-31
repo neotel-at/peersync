@@ -170,8 +170,8 @@ OPTIONS
     -c CONFIGFILE
         User configuraiton file from CONFIGFILE
     -C  Use no configuration file, be sure to specify -p and -s
-    -p PEER
-        Use PEER as peer to sync against (usually USER@HOST or HOST)
+    -h PEERHOST or -p PEERHOST
+        Use PEERHOST as peer to sync against (usually USER@HOST or HOST)
     -s SYNCROOT
         Use SYNCROOT as root for syncronisation, overrides configuration
     -d Enable DEBUG logging, for debug purposes only
@@ -221,7 +221,7 @@ fi
 ### PREPROCESS COMMANDLINE
 
 debuglog "Preprocessing commandline $* "
-while getopts "ds:Cc:p:" opt $*; do
+while getopts "ds:Cc:p:h:" opt $*; do
   debuglog "Processing option $opt"
   case $opt in
     s)
@@ -237,8 +237,8 @@ while getopts "ds:Cc:p:" opt $*; do
       debuglog "Setting configuration file to $OPTARG"
       PEERSYNCCONF=$OPTARG
       ;;
-    p)
-      debuglog "Setting peer to $OPTARG"
+    p|h)
+      debuglog "Setting peer host to $OPTARG"
       FORCEPEER=$OPTARG
       ;;
     d)
