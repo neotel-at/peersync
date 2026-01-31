@@ -1,9 +1,10 @@
 #!/bin/bash
-# PeerSync - a file syncronization tool for clustered hosts 
+# peerpync - a file syncronisation tool based on rsync
 # Author: Roland Lammel <roland.lammel@neotel.at>
-# (C)2015-2019, NeoTel Telefonservice GmbH & Co KG
+# (C)2015-2026, NeoTel Telefonservice GmbH & Co KG
 
 VERSION=0.9.2
+COPYRIGHT="(C)2015-2026, NeoTel Telefonservice GmbH & Co KG"
 PEERSYNCCONFIGS="$HOME/.peersync /etc/peersync.conf"
 DEBUG=${DEBUG-0}
 VERBOSE=${VERBOSE-0}
@@ -33,8 +34,8 @@ verbose() {
 }
 
 version() {
-    echo "PeerSync v$VERSION - A peer file syncronisation tool based on rsync"
-    echo "(C)2016, NeoTel Telefonservice GmbH & Co KG"
+    echo "peersync v$VERSION - a file syncronisation tool based on rsync"
+    echo "$COPYRIGHT"
 }
 
 rsync_peer() {
@@ -118,10 +119,12 @@ if [ "$1" = "help" ]; then
     version
     cat <<__EOF_HELP
 
-PeerSync
+peersync
 ========
 
-A peer file syncronisation tool based on rsync
+A simple file syncronisation tool based on rsync to keep a defined list of
+directories and files in sync on two hosts (peers). Usually used on cluster 
+nodes to keep configurations consistent.
 
 USAGE
 -----
@@ -145,7 +148,7 @@ COMMANDS
         File filtering rules may be specified (see show)
 
     diff [FILTER1 FILTER2 ...]
-        Compore the file contents of changed file against peer. A local copy
+        Compare the file contents of changed file against peer. A local copy
         will be compared to a copy of the remote files using the diff command
         (default: diff -urw).
         File filtering rules may be specified (see show)
@@ -176,7 +179,7 @@ OPTIONS
 CONFIGURATION FILE
 ------------------
 
-The configuration for peersync can be placed in $HOME/.peersync or /etc/peersync.conf.
+The configuration for peersync resides in \$HOME/.peersync or /etc/peersync.conf.
 The first file found will be loaded. 
 
 Example configuration in /etc/peersync.conf (commented options show defaults):
@@ -192,27 +195,25 @@ Example configuration in /etc/peersync.conf (commented options show defaults):
 FILE FILTERING RULES
 --------------------
 
+File filtering rules generally follow the rsync filter rules. Comments can be 
+used by starting a line with '#'. See the INCLUDE/EXCLUDE PATTERN RULES section 
+in the rsync manpage for details.
+
 Example file filtering rules in /etc/peersync.files:
 
+    # nginx configs
     - /nginx/ssl/
     + /nginx/***
     - *
 
-For SYNCROOT=/etc/ this will sync all nginx configurations of /etc/nginx (and 
-below), exlcuding the /etc/nginx/ssl directory. All other files in /etc will 
-also be excluded, due to the "- *" rule.
-
-This example will sync only the "nginx" directory excluding the "nginx/ssl" 
-sub-directory, all other files and directory are not considered. The example 
-assumes "/etc" as the synchronization root directory (SYNCROOT=/etc/).
-
-See the INCLUDE/EXCLUDE PATTERN RULES section in the rsync manpage for details.
+The above example assumes '/etc' as the sync root directory ('SYNCROOT=/etc/')
+and syncs only the 'nginx' directory excluding the 'nginx/ssl' sub directory. 
+All other files and directory are exluded due to the trailing '- *' rule. 
 
 COPYRIGHT
 ---------
 
-(C)2015-2019, NeoTel Telefonservice GmbH & Co KG
-
+$COPYRIGHT
 __EOF_HELP
     exit 1
 fi
@@ -272,7 +273,7 @@ fi
 
 if [ "$PEERSYNCCONF" != "-" ]; then
     if [ ! -r "$PEERSYNCCONF" ]; then
-        echo "PeerSync configuration file $PEERSYNCCONF not found. Please create."
+        echo "peersync configuration file $PEERSYNCCONF not found. Please create."
         echo "See peersync help for details."
         exit 1
     fi
@@ -298,7 +299,7 @@ debuglog "    RSYNCOPTS=$RSYNCOPTS"
 
 if [ "$SYNCFILES" != "-" ]; then
     if [ -z "$SYNCFILES" ]; then
-        echo "ERROR: PeerSync file filter rules are not defined."
+        echo "ERROR: peersync file filter rules are not defined."
         echo "Please ensure SYNCFILES is set to a file specifying filtering rules"
         exit 1
     fi

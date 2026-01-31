@@ -1,9 +1,9 @@
-PeerSync
+peersync
 ========
 
-A simple rsync-based peer file syncronisation tool to keep a defined list of 
-directories and files in sync on two hosts. Usually used on cluster nodes 
-sharing the same configurations.
+A simple file syncronisation tool based on rsync to keep a defined list of
+directories and files in sync on two hosts (peers). Usually used on cluster 
+nodes to keep configurations consistent.
 
 USAGE
 -----
@@ -49,8 +49,8 @@ OPTIONS
     -c CONFIGFILE
         User configuraiton file from CONFIGFILE
     -C  Use no configuration file, be sure to specify -p and -s
-    -p PEER
-        Use PEER as peer to sync against (usually USER@HOST or HOST)
+    -h PEERHOST or -p PEERHOST
+        Use PEERHOST as peer to sync against (usually USER@HOST or HOST)
     -s SYNCROOT
         Use SYNCROOT as root for syncronisation, overrides configuration
     -d Enable DEBUG logging, for debug purposes only
@@ -58,7 +58,7 @@ OPTIONS
 CONFIGURATION FILE
 ------------------
 
-The configuration for peersync can be placed in $HOME/.peersync or /etc/peersync.conf.
+The configuration for peersync resides in $HOME/.peersync or /etc/peersync.conf.
 The first file found will be loaded. 
 
 Example configuration in /etc/peersync.conf (commented options show defaults):
@@ -66,29 +66,35 @@ Example configuration in /etc/peersync.conf (commented options show defaults):
     PEER=myuser@mypeer
     SYNCROOT=/etc/
     # SYNCFILES=/etc/peersync.files
-    # RSYNCOPTS=-avhizO --numeric-ids --checksum --delete-after
+    # RSYNCOPTS="-avhizO --checksum --delete-after"
     # DIFFBIN=diff
     # DIFFOPTS=-urw
     # DIFFTMPDIR=
 
+To ensure consistent numeric user and group IDs the '--numeric-ids' rsync
+option must be used. This requires a consistenc user configuation on the system:
+
+    RSYNCOPTS="-avhizO --numeric-ids --checksum --delete-after"
+
 FILE FILTERING RULES
 --------------------
 
+File filtering rules generally follow the rsync filter rules. Comments can be 
+used by starting a line with '#'. See the INCLUDE/EXCLUDE PATTERN RULES section 
+in the rsync manpage for details.
+
 Example file filtering rules in /etc/peersync.files:
 
+    # nginx configs
     - /nginx/ssl/
     + /nginx/***
     - *
 
-For the `SYNCROOT=/etc/` this will sync all nginx configurations of /etc/nginx (and below), exlcuding the /etc/nginx/ssl directory.
-All other files in /etc will also be excluded, due to the '`- *`' rule.
-
-This example will sync only the `nginx` directory excluding the `nginx/ssl` sub-
-directory, all other files and directory are not considered. The example assumes `/etc` as the synchronization root directory (`SYNCROOT=/etc/`).
-
-See the INCLUDE/EXCLUDE PATTERN RULES section in the rsync manpage for details.
+The above example assumes '/etc' as the sync root directory ('SYNCROOT=/etc/')
+and syncs only the 'nginx' directory excluding the 'nginx/ssl' sub directory. 
+All other files and directory are exluded due to the trailing '- *' rule. 
 
 COPYRIGHT
 ---------
 
-(C)2015-2019, NeoTel Telefonservice GmbH & Co KG
+(C)2015-2026, NeoTel Telefonservice GmbH & Co KG
