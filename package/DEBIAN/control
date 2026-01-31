@@ -4,4 +4,4 @@ Maintainer: Roland Lammel <roland.lammel@neotel.at>
 Depends: debconf (>= 0.5.00), rsync, diffutils
 Priority: optional
 Version: %VERSION%
-Description: A peer file synchronisation tool based on rsync
+Description: A simple file synchronisation tool based on rsync

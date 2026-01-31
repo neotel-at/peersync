@@ -1,4 +1,4 @@
-Summary: A peer file synchronisation tool based on rsync
+Summary: A simple file synchronisation tool based on rsync
 Name: peersync
 Version: %VERSION%
 Release: 1
@@ -8,6 +8,7 @@ Vendor: NeoTel Telefonservice GmbH & Co KG
 # Source: %{name}.tar.gz
 BuildArch: noarch
 BuildRoot: /var/tmp/%{name}-buildroot
+Requires: rsync, diffutils
 
 %description
 Peersync is a rsync based peer file synchronization tool
