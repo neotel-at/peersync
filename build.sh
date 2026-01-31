@@ -1,4 +1,12 @@
 #!/bin/bash
+#
+# For building peersync packages for Debian and RPM based systems 
+# the script requires fakeroot and dpkg-deb for building deb packages
+# and rpmbuild for building rpm packages
+#
+# Required packages:
+#   Debian/Ubuntu: fakeroot dpkg-dev rpm
+#   RHEL/CentOS:   rpm-build fakeroot dpkg-dev
 
 TARGETDIR=dist
 PEERSYNC_SCRIPT=peersync.sh
@@ -10,7 +18,6 @@ if [ -z $VERSION ]; then
 fi
 
 build_debian() {
-  TARGET=$1
   echo ""
   echo "#========================"
   echo "# Building Debian package"
@@ -26,7 +33,7 @@ build_debian() {
   cp etc/peersync.files $BUILDDIR/etc/
 
   sed -i "s/%VERSION%/$VERSION/" $BUILDDIR/DEBIAN/control
-  fakeroot dpkg-deb -v --build $BUILDDIR dist
+  fakeroot dpkg-deb -v --build $BUILDDIR $TARGETDIR/peersync_$VERSION.deb
   rm -rf $BUILDDIR
 }
 
@@ -35,27 +42,22 @@ build_rpm() {
   echo "#====================="
   echo "# Building RPM package"
   echo "#====================="
-  BUILDDIR=/tmp/peersync.rpm.$$
   BUILDSPEC=/tmp/peersync.$VERSION.spec
-  mkdir $BUILDDIR
-  mkdir -p $BUILDDIR/usr/bin
-  mkdir -p $BUILDDIR/etc
-
-  cp $PEERSYNC_SCRIPT $BUILDDIR/usr/bin/peersync
-  cp etc/peersync.conf $BUILDDIR/etc/
-  cp etc/peersync.files $BUILDDIR/etc/
-  cp package/RPM/peersync.spec /tmp/peersync.$VERSION.spec
-
   sed "s/%VERSION%/$VERSION/" package/RPM/peersync.spec > $BUILDSPEC
-  rpmbuild -v -ba --buildroot $BUILDDIR $BUILDSPEC
-  rm -rf $BUILDDIR
+  rpmbuild -v -ba --build-in-place $BUILDSPEC
+  mv /home/rl/rpmbuild/RPMS/noarch/peersync-$VERSION-1.noarch.rpm $TARGETDIR/
+  rm -f $BUILDSPEC
 }
 
-if [ ! -d $TARGET ]; then
-  mkdir dist
+if [ ! -d $TARGETDIR ]; then
+  mkdir $TARGETDIR
+  if [ $? -ne 0 ]; then
+      echo "Failed to create target directory $TARGETDIR"
+      exit 1
+  fi
 fi
 
 echo "Building packages for version $VERSION of peersync"
-build_debian $TARGETDIR
+build_debian
 build_rpm
 
