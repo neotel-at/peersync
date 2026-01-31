@@ -1,5 +1,0 @@
-PEER=root@deb1
-SYNCROOT=/tmp/
-SYNCFILES=/tmp/peersync.files
-# RSYNCOPTS="-avhizO --numeric-ids"
-DEBUG=1
